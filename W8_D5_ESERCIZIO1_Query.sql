@@ -148,16 +148,18 @@ LIMIT 1;
 Approccio 1: Utilizzo di una sottoquery:   */
 SELECT p.product_name, p.category
 FROM product p
-LEFT JOIN sales s ON p.product_id = s.product_id
-WHERE s.sale_id IS NULL;
-
-/*   Approccio 2: Utilizzo di un JOIN sinistro:  */
-SELECT p.product_name, p.category
-FROM product p
 WHERE NOT EXISTS (
   SELECT 1
   FROM sales s
   WHERE p.product_id = s.product_id);
+
+
+/*   Approccio 2: Utilizzo di una LEFT JOIN:  */
+SELECT p.product_name, p.category
+FROM product p
+LEFT JOIN sales s ON p.product_id = s.product_id
+WHERE s.sale_id IS NULL;
+
 
 
 /*   6. Elenco dei prodotti con l'ultima data di vendita:  */
